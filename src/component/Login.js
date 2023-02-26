@@ -6,31 +6,21 @@ import { notify } from './toast';
 import styles from './SignUp.module.css';
 import { Link } from 'react-router-dom';
 
-const SignUp = () => {
+const Login = () => {
 
     const[data, setData]=useState({
-        name:"",
         email:"",
-        password:"",
-        confirmPassword:"",
-        isAccepted:false
+        password:""
     });
     const[errors, setErrors]=useState({});
     const[touched, setTouched]=useState({});
 
     useEffect(() => {
-        setErrors(validate(data, "signUp"));
-        console.log(errors);
+        setErrors(validate(data, "login"));
     }, [data, touched])
 
     const changHandler = event => {
-        if(event.target.name === "isAccepted"){
-            setData({...data, [event.target.name]: event.target.checked})
-        }
-        else{
             setData({...data, [event.target.name]: event.target.value})
-        }
-        console.log(data)
     }
     const focusHandler = event => {
         setTouched({...touched, [event.target.name]: true})
@@ -39,7 +29,7 @@ const SignUp = () => {
         event.preventDefault();
         if(!Object.keys(errors).length)
         {
-            notify("you signed up successfully", "success");
+            notify("you Logged in successfully", "success");
         }else
         {
             notify("invalid data", "error")
@@ -56,18 +46,7 @@ const SignUp = () => {
     return (
         <div className={styles.container}>
             <form onSubmit={submitHandler} className={styles.formContainer}>
-                <h1 className={styles.header}>Sign Up</h1>
-                <div className={styles.formField}>
-                    <label>name</label>
-                    <input 
-                    className={(errors.name && touched.name) ? styles.uncompleted : styles.formInput}
-                    type="text" 
-                    name="name" 
-                    value={data.name} 
-                    onChange={changHandler} 
-                    onFocus={focusHandler}/>
-                    {errors.name && touched.name && <span>{errors.name}</span>}
-                </div>
+                <h1 className={styles.header}>Login</h1>
                 <div className={styles.formField}>
                     <label>email</label>
                     <input 
@@ -90,32 +69,9 @@ const SignUp = () => {
                     onFocus={focusHandler}/>
                     {errors.password && touched.password && <span>{errors.password}</span>}
                 </div>
-                <div className={styles.formField}>
-                    <label>confirm password</label>
-                    <input 
-                    className={(errors.confirmPassword && touched.confirmPassword) ? styles.uncompleted : styles.formInput}
-                    type="password" 
-                    name="confirmPassword" 
-                    value={data.confirmPassword} 
-                    onChange={changHandler} 
-                    onFocus={focusHandler}/>
-                     {errors.confirmPassword && touched.confirmPassword && <span>{errors.confirmPassword}</span>}
-                </div>
-                <div className={styles.formField}>
-                    <div className={styles.checkboxContainer}>
-                    <label>I accept terms of privacy of policy</label>
-                    <input 
-                    type="checkbox" 
-                    name="isAccepted" 
-                    value={data.isAccepted} 
-                    onChange={changHandler} 
-                    onFocus={focusHandler}/>
-                    </div>
-                     {errors.isAccepted && touched.isAccepted && <span>{errors.isAccepted}</span>}
-                </div>
                 <div className={styles.formButtons}>
-                    <Link to="/login">Login</Link>
-                    <button type="submit">submit</button>
+                    <Link to="/signup">SignUp</Link>
+                    <button type="submit">Login</button>
                 </div>
             </form>
             <ToastContainer />
@@ -123,4 +79,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default Login;
